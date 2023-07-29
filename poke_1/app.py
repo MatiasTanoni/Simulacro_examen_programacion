@@ -87,97 +87,94 @@ class App(customtkinter.CTk):
         # Cargar aca los pokemones
         self.lista_nombre_pokemones = ["Pikachu", "Charizard", "Bulbasaur", "Squirtle", "Jigglypuff", "Psyduck", "Eevee", "Gengar", "Mewtwo", "Vaporeon"]
         self.lista_poder_pokemones = [80, 150, 70, 90, 60, 100, 75, 120, 180, 95]
-        self.lista_tipo_pokemones = ["eléctrico", "fuego", "planta", "agua", "normal", "agua", "normal", "fantasma", "psíquico", "agua"]
+        self.lista_tipo_pokemones = ["electrico", "fuego", "planta", "agua", "normal", "agua", "normal", "fantasma", "psiquico", "agua"]
+
+
+    def btn_mostrar_informe_1(self):
+        for i, nombre in enumerate(self.lista_nombre_pokemones):
+            print(f"{i} - {nombre}")
+
+        #! 5) - Porcentaje de pokemones de tipo psiquico con poder de pelea inferior o igual a 150 (sobre el total de pokemones ingresados)
+        contador_psiquico_150 = 0
+        total_pokemones_ingresados = len(self.lista_nombre_pokemones)
+
+        for i, tipo in enumerate(self.lista_tipo_pokemones):
+            if tipo == "psiquico":
+                poder = self.lista_poder_pokemones[i]
+
+                if poder <= 150:
+                    contador_psiquico_150 += 1
+
+        porcentaje = (contador_psiquico_150 * 100) / total_pokemones_ingresados
+        
+        print(f"Porcentaje de pokemones de tipo psiquico con poder de pelea inferior o igual a 150: {porcentaje}%")
+
+
+    def btn_mostrar_informe_2(self):
+       #! 4) - Porcentaje de pokemones de tipo agua con mas de 100 puntos de poder (Sobre el total de pokemones ingresados).
+        contador_agua_100= 0
+        total_pokemones_ingresados = len(self.lista_nombre_pokemones)
+
+        for i, tipo in enumerate(self.lista_tipo_pokemones):  
+            if tipo == "agua":
+                poder = self.lista_poder_pokemones[i]
+
+                if poder > 100:
+                    contador_agua_100 += 1
+
+        porcentaje = (contador_agua_100 * 100) / total_pokemones_ingresados 
+
+        print(f"Porcentaje de pokemones de tipo agua con poder de pelea mayor a 100: {porcentaje}%")
+           
+
+
+    def btn_mostrar_informe_3(self):
+        #! 6) - tipo de los pokemones del tipo que mas pokemones posea. 
+            contador_electrico = self.lista_tipo_pokemones.count("electrico")
+            contador_fuego = self.lista_tipo_pokemones.count("fuego")
+            contador_planta = self.lista_tipo_pokemones.count("planta")
+            contador_agua = self.lista_tipo_pokemones.count("agua")
+            contador_normal = self.lista_tipo_pokemones.count("normal")
+            contador_fantasma = self.lista_tipo_pokemones.count("fantasma")
+            contador_psiquico = self.lista_tipo_pokemones.count("psiquico")
+
+            if contador_electrico > contador_fuego and contador_electrico > contador_planta and contador_electrico >contador_agua and contador_electrico > contador_normal and contador_electrico > contador_fantasma and contador_electrico > contador_psiquico:
+                mayor_tipo_pokemones = "El tipo de pokemones que mas hay es de ELECTRICO"
+            elif contador_fuego > contador_electrico and contador_fuego > contador_planta and contador_fuego > contador_agua and contador_fuego > contador_normal and contador_fuego > contador_fantasma and contador_fuego > contador_psiquico:
+                mayor_tipo_pokemones = "El tipo de pokemones que mas hay es de FUEGO"
+            elif contador_planta > contador_electrico and contador_planta > contador_fuego and contador_planta > contador_agua and contador_planta > contador_normal and contador_planta > contador_fantasma and contador_planta > contador_psiquico:
+                mayor_tipo_pokemones = "El tipo de pokemones que mas hay es de PLANTA"
+            elif contador_agua > contador_electrico and contador_agua > contador_fuego and contador_agua > contador_planta and contador_agua > contador_normal and contador_agua > contador_fantasma and contador_agua > contador_psiquico:   
+                mayor_tipo_pokemones = "El tipo de pokemones que mas hay es de AGUA"
+            elif contador_normal > contador_electrico and contador_normal > contador_fuego and contador_normal > contador_planta and contador_normal > contador_agua and contador_normal > contador_fantasma and contador_normal > contador_psiquico:    
+                mayor_tipo_pokemones = "El tipo de pokemones que mas hay es de NORMAL"
+            elif contador_fantasma > contador_electrico and contador_fantasma > contador_fuego and contador_fantasma > contador_planta and contador_fantasma > contador_agua and contador_fantasma > contador_normal and contador_fantasma > contador_psiquico:
+                mayor_tipo_pokemones = "El tipo de pokemones que mas hay es de FANTASMA"
+            else:
+                mayor_tipo_pokemones = mayor_tipo_pokemones = "El tipo de pokemones que mas hay es de PSIQUICO"
+
+            print(mayor_tipo_pokemones)    
 
 
     def btn_cargar_pokedex_on_click(self):
-        alert("carga","carga")
-        
         for _ in range(10):
 
-            nombre = prompt("pokemon", "Ingrese nombre del pokemon")
+            nombre = prompt("Nombre", "Ingrese el nombre")
             while nombre == None or not nombre.isalpha():
-                nombre = ("pokemon", "Error! Ingrese nuevamente el nombre de su pokemon")
-            else: 
-                self.lista_nombre_pokemones.append(nombre)    
+                nombre = prompt("Error", "Error! Ingresar el nombre correctamente!")
+                             
+            tipo = prompt("Tipo", "Ingrese el tipo")
+            while tipo == None or not tipo.isalpha() or tipo != "agua" and tipo != "psiquico" and tipo != "electrico": 
+                tipo = prompt("Error", "Error! Ingrese el tipo correctamente!")
 
-            elemento = prompt("elemento", "Ingrese el elemento de su pokemon")
-            while elemento == None or not elemento.isalpha() or elemento != "Electrico" and elemento != "Agua" and elemento != "Psiquio":
-                elemento = prompt("elemento", "Error!, Ingrese el elemento nuevamente")
-            else:
-                self.lista_poder_pokemones.append(elemento)
+            poder = prompt("Poder", "Ingrese el poder")
+            while poder == None or not poder.isdigit() or int(poder) > 200 or int(poder) < 50:
+                poder = prompt("Error", "Error! Ingrese el poder correctamente!")
+            poder = int(poder)
 
-            poder = prompt("poder", "Ingrese la cantidad de poder de su pokemon (50/200)")
-            while poder == None or not elemento.isdigit() or int(poder) < 50 or int(poder) > 200:
-                poder = prompt ("poder", "Error! Ingrese nuevamente el poder")
-            else:
-                poder = int(poder)
-                self.lista_poder_pokemones.append(poder)       
-
-    def btn_mostrar_informe_1(self):
-        alert("1","1")
-        #5
-        contador_pokemones = 0
-        contador_psiquio = 0
-        elemento = self.lista_nombre_pokemones
-        poder = self.lista_poder_pokemones
-
-        for pokemones in self.lista_nombre_pokemones:
-                print(f"pokemon: {pokemones}")
-                print(f"posicion:{contador_pokemones}")
-                contador_pokemones += 1
-
-        if elemento == "Psiquio":
-            if poder <=150:
-                contador_psiquio += 1
-        porcentaje_psiquio =  (contador_psiquio * 100) / contador_pokemones      
-
-        print("Simulacro", porcentaje_psiquio)
-
-    def btn_mostrar_informe_2(self):
-        alert("2","2")
-        #4
-        contador_agua = 0
-        elemento = self.lista_nombre_pokemones
-        poder = self.lista_poder_pokemones
-        contador_pokemones = 0
-
-        for pokemones in self.lista_nombre_pokemones:
-                print(f"pokemon: {pokemones}")
-                print(f"posicion:{contador_pokemones}")
-                contador_pokemones += 1
-
-        if elemento == "Agua":
-            if poder >= 100:
-                contador_agua += 1
-        porcentaje_agua = (contador_agua * 100) / contador_pokemones
-
-        print("Simulacro", porcentaje_agua)
-
-    def btn_mostrar_informe_3(self):
-        alert("3","3")
-        #6        
-        contador_electrico = 0
-        contador_agua = 0
-        contador_psiquio = 0
-        elemento = self.lista_nombre_pokemones
-        mayor_pokemones = 0
-
-        if elemento == "electrico":
-            contador_electrico += 1
-        if elemento == "agua":
-            contador_agua += 1
-        if elemento == "psiquio":
-            contador_psiquio += 1  
-
-        if contador_electrico > contador_agua and contador_electrico > contador_psiquio:
-            mayor_pokemones = "El tipo de pokemones que mas hay es electrico"
-        if contador_agua > contador_electrico and contador_agua > contador_psiquio:
-            mayor_pokemones = "El tipo de pokemones que mas hay son de agua" 
-        else:
-            mayor_pokemones = "El tipo de pokemones que mas hay son de psiquio"  
-
-        print("Simulacro", mayor_pokemones)         
+            self.lista_nombre_pokemones.append(nombre)
+            self.lista_tipo_pokemones.append(tipo)
+            self.lista_poder_pokemones.append(poder)              
 
 
 
